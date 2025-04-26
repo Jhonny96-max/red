@@ -1,0 +1,71 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cadastro API",
+    "version": "1.0.0",
+    "description": "API para gerenciamento de cadastros"
+  },
+  "paths": {
+    "/cadastros": {
+      "get": {
+        "summary": "Listar todos os cadastros",
+        "responses": {
+          "200": {
+            "description": "Lista de cadastros"
+          }
+        }
+      },
+      "post": {
+        "summary": "Adicionar novo cadastro",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": { "type": "string" },
+                  "idade": { "type": "integer" },
+                  "cidade": { "type": "string" }
+                },
+                "required": ["nome", "idade", "cidade"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Cadastro criado" }
+        }
+      }
+    },
+    "/cadastros/busca": {
+      "get": {
+        "summary": "Buscar por cidade e idade",
+        "parameters": [
+          { "name": "cidade", "in": "query", "schema": { "type": "string" } },
+          { "name": "idade", "in": "query", "schema": { "type": "integer" } }
+        ],
+        "responses": {
+          "200": { "description": "Resultados encontrados" }
+        }
+      }
+    },
+    "/cadastros/{nome}": {
+      "delete": {
+        "summary": "Remover um cadastro",
+        "parameters": [
+          {
+            "name": "nome",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Cadastro removido" },
+          "404": { "description": "Cadastro não encontrado" }
+        }
+      }
+    }
+  }
+}
